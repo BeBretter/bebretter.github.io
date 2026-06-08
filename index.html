@@ -525,7 +525,7 @@ nav {
 /* ── MUSCLE MEMORY ── */
 .muscle-memory-section {
   background: var(--color-primary);
-  color: var(--color-text-inverse);
+  color: #ffffff;
   padding-block: clamp(var(--space-12), 8vw, var(--space-20));
 }
 .mm-inner {
@@ -541,7 +541,7 @@ nav {
   line-height: 1.05;
   letter-spacing: 0.02em;
   margin-bottom: var(--space-6);
-  color: var(--color-text-inverse);
+  color: #ffffff;
 }
 .mm-text { font-size: var(--text-base); opacity: 0.8; line-height: 1.7; margin-bottom: var(--space-5); }
 .mm-stats { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4); }
@@ -690,7 +690,13 @@ footer {
   .hero-grid { grid-template-columns: 1fr; }
   .hero-image-side { order: -1; }
   .hero-photo-frame, .hero-photo-placeholder { max-width: 280px; aspect-ratio: 1/1; margin-inline: auto; }
-  .hero-floating-card { left: 0; bottom: calc(-1 * var(--space-6)); }
+  .hero-floating-card {
+  position: static;
+  margin-top: var(--space-4);
+  left: auto;
+  bottom: auto;
+  width: 100%;
+}
   .about-grid { grid-template-columns: 1fr; gap: var(--space-8); }
   .mm-inner { grid-template-columns: 1fr; }
   .nutrition-grid { grid-template-columns: 1fr; }
