@@ -1,0 +1,1147 @@
+<!DOCTYPE html>
+<html lang="hu" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Be Bretter — Online Fitness Coach</title>
+<meta name="description" content="AFAA-minősített online fitness coach kezdőknek. Napi 1 óra, heti 4 nap, valódi izomépítési rendszer.">
+
+<!-- Fonts -->
+<link href="https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&f[]=satoshi@300,400,500,700&display=swap" rel="stylesheet">
+
+<style>
+/* ── DESIGN TOKENS ── */
+:root {
+  --text-xs:   clamp(0.75rem,  0.7rem  + 0.25vw, 0.875rem);
+  --text-sm:   clamp(0.875rem, 0.8rem  + 0.35vw, 1rem);
+  --text-base: clamp(1rem,     0.95rem + 0.25vw, 1.125rem);
+  --text-lg:   clamp(1.125rem, 1rem    + 0.75vw, 1.5rem);
+  --text-xl:   clamp(1.5rem,   1.2rem  + 1.25vw, 2.25rem);
+  --text-2xl:  clamp(2rem,     1.2rem  + 2.5vw,  3.5rem);
+  --text-3xl:  clamp(2.5rem,   1rem    + 4vw,    5rem);
+  --text-hero: clamp(3rem,     0.5rem  + 7vw,    7rem);
+
+  --space-1: 0.25rem; --space-2: 0.5rem; --space-3: 0.75rem;
+  --space-4: 1rem;    --space-5: 1.25rem; --space-6: 1.5rem;
+  --space-8: 2rem;    --space-10: 2.5rem; --space-12: 3rem;
+  --space-16: 4rem;   --space-20: 5rem;   --space-24: 6rem;
+
+  --radius-sm: 0.375rem; --radius-md: 0.5rem; --radius-lg: 0.75rem;
+  --radius-xl: 1rem; --radius-2xl: 1.5rem; --radius-full: 9999px;
+
+  --transition-interactive: 180ms cubic-bezier(0.16, 1, 0.3, 1);
+
+  --content-narrow: 640px;
+  --content-default: 960px;
+  --content-wide: 1200px;
+
+  --font-display: 'Clash Display', 'Georgia', serif;
+  --font-body: 'Satoshi', 'Helvetica Neue', sans-serif;
+}
+
+/* ── DARK MODE (default) ── */
+:root, [data-theme="dark"] {
+  --color-bg:               #0f0e0c;
+  --color-surface:          #141310;
+  --color-surface-2:        #1a1916;
+  --color-surface-offset:   #1e1d1a;
+  --color-surface-dynamic:  #252420;
+  --color-divider:          #2a2926;
+  --color-border:           #333230;
+  --color-text:             #e8e6e1;
+  --color-text-muted:       #7a7870;
+  --color-text-faint:       #4a4946;
+  --color-text-inverse:     #0f0e0c;
+  --color-primary:          #d4ff4e;
+  --color-primary-hover:    #c4ef3e;
+  --color-primary-active:   #a8d020;
+  --color-primary-highlight: #2a2e14;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.3);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.4);
+  --shadow-lg: 0 12px 40px rgba(0,0,0,0.5);
+}
+
+[data-theme="light"] {
+  --color-bg:               #f7f6f2;
+  --color-surface:          #f9f8f5;
+  --color-surface-2:        #fbfbf9;
+  --color-surface-offset:   #f0ede8;
+  --color-surface-dynamic:  #e6e3de;
+  --color-divider:          #dcd9d4;
+  --color-border:           #d0cdc8;
+  --color-text:             #1a1916;
+  --color-text-muted:       #6a6864;
+  --color-text-faint:       #b0aea8;
+  --color-text-inverse:     #f9f8f5;
+  --color-primary:          #3d6e00;
+  --color-primary-hover:    #2d5200;
+  --color-primary-active:   #1e3800;
+  --color-primary-highlight: #e0f0c0;
+  --shadow-sm: 0 1px 2px rgba(40,37,30,0.06);
+  --shadow-md: 0 4px 12px rgba(40,37,30,0.08);
+  --shadow-lg: 0 12px 32px rgba(40,37,30,0.12);
+}
+
+/* ── BASE RESET ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html {
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  scroll-behavior: smooth;
+  scroll-padding-top: var(--space-16);
+}
+body {
+  min-height: 100dvh;
+  line-height: 1.6;
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  color: var(--color-text);
+  background-color: var(--color-bg);
+  overflow-x: hidden;
+}
+img, picture, video, canvas, svg { display: block; max-width: 100%; height: auto; }
+ul[role="list"], ol[role="list"] { list-style: none; }
+input, button, textarea, select { font: inherit; color: inherit; }
+h1, h2, h3, h4, h5, h6 { text-wrap: balance; line-height: 1.1; }
+p, li { text-wrap: pretty; max-width: 72ch; }
+button { cursor: pointer; background: none; border: none; }
+a, button, [role="button"] {
+  transition: color var(--transition-interactive),
+              background var(--transition-interactive),
+              border-color var(--transition-interactive),
+              box-shadow var(--transition-interactive),
+              opacity var(--transition-interactive);
+}
+::selection { background: color-mix(in srgb, var(--color-primary) 20%, transparent); color: var(--color-text); }
+:focus-visible { outline: 2px solid var(--color-primary); outline-offset: 3px; border-radius: var(--radius-sm); }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ── SCROLL REVEAL ── */
+.fade-in { opacity: 1; }
+@supports (animation-timeline: scroll()) {
+  .fade-in {
+    opacity: 0;
+    animation: reveal-fade linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 80%;
+  }
+}
+@keyframes reveal-fade { to { opacity: 1; } }
+
+/* ── LAYOUT UTILS ── */
+.container {
+  max-width: var(--content-default);
+  margin-inline: auto;
+  padding-inline: var(--space-6);
+}
+.container--wide { max-width: var(--content-wide); margin-inline: auto; padding-inline: var(--space-6); }
+.section { padding-block: clamp(var(--space-12), 8vw, var(--space-24)); }
+
+/* ── NAV ── */
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: color-mix(in oklch, var(--color-bg) 85%, transparent);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid color-mix(in srgb, var(--color-text) 8%, transparent);
+}
+.nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-block: var(--space-4);
+  gap: var(--space-4);
+}
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  text-decoration: none;
+  color: var(--color-text);
+}
+.nav-logo-text {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+.nav-logo-text span { color: var(--color-primary); }
+.nav-actions { display: flex; align-items: center; gap: var(--space-3); }
+.btn-theme {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-full);
+  color: var(--color-text-muted);
+  border: 1px solid var(--color-border);
+}
+.btn-theme:hover { color: var(--color-text); background: var(--color-surface-offset); }
+.btn-cta-nav {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  background: var(--color-primary);
+  color: var(--color-text-inverse);
+  border-radius: var(--radius-full);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.btn-cta-nav:hover { background: var(--color-primary-hover); }
+
+/* ── HERO ── */
+.hero {
+  min-height: 92vh;
+  display: grid;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  padding-block: var(--space-20);
+}
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 60% 50% at 80% 30%, rgba(180,220,40,0.08), transparent),
+    radial-gradient(ellipse 40% 40% at 20% 80%, rgba(90,130,10,0.05), transparent);
+  pointer-events: none;
+}
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-12);
+  align-items: center;
+}
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-1) var(--space-3);
+  border: 1px solid color-mix(in srgb, var(--color-primary) 40%, transparent);
+  background: color-mix(in srgb, var(--color-primary) 8%, transparent);
+  border-radius: var(--radius-full);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  color: var(--color-primary);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: var(--space-6);
+}
+.hero-badge-dot {
+  width: 6px; height: 6px;
+  border-radius: var(--radius-full);
+  background: var(--color-primary);
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.7); }
+}
+.hero-title {
+  font-family: var(--font-display);
+  font-size: var(--text-hero);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  margin-bottom: var(--space-6);
+  color: var(--color-text);
+}
+.hero-title .accent { color: var(--color-primary); }
+.hero-desc {
+  font-size: var(--text-lg);
+  color: var(--color-text-muted);
+  max-width: 50ch;
+  line-height: 1.6;
+  margin-bottom: var(--space-8);
+}
+.hero-stats {
+  display: flex;
+  gap: var(--space-8);
+  margin-bottom: var(--space-8);
+  flex-wrap: wrap;
+}
+.stat-item { display: block; }
+.stat-number {
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  font-weight: 700;
+  line-height: 1;
+  color: var(--color-text);
+}
+.stat-label {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-top: var(--space-1);
+}
+.hero-cta-group { display: flex; gap: var(--space-3); flex-wrap: wrap; align-items: center; }
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-4) var(--space-8);
+  background: var(--color-primary);
+  color: var(--color-text-inverse);
+  border-radius: var(--radius-full);
+  font-size: var(--text-base);
+  font-weight: 700;
+  text-decoration: none;
+}
+.btn-primary:hover { background: var(--color-primary-hover); transform: translateY(-1px); box-shadow: var(--shadow-md); }
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-4) var(--space-6);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-full);
+  font-size: var(--text-base);
+  font-weight: 500;
+  color: var(--color-text);
+  text-decoration: none;
+}
+.btn-ghost:hover { background: var(--color-surface-offset); }
+
+/* Hero image side */
+.hero-image-side {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+.hero-photo-frame {
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+}
+.hero-photo-frame img {
+  width: 100%;
+  aspect-ratio: 3/4;
+  object-fit: cover;
+  border-radius: var(--radius-2xl);
+  box-shadow: var(--shadow-lg);
+}
+.hero-photo-placeholder {
+  width: 100%;
+  aspect-ratio: 3/4;
+  border-radius: var(--radius-2xl);
+  background: linear-gradient(135deg, var(--color-surface-2), var(--color-surface-dynamic));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-faint);
+  font-size: var(--text-sm);
+  box-shadow: var(--shadow-lg);
+}
+.hero-photo-placeholder svg { opacity: 0.3; }
+.hero-floating-card {
+  position: absolute;
+  bottom: var(--space-6);
+  left: calc(-1 * var(--space-8));
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-4) var(--space-5);
+  box-shadow: var(--shadow-lg);
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-width: 200px;
+
+}
+.floating-icon {
+  width: 40px; height: 40px;
+  border-radius: var(--radius-lg);
+  background: var(--color-primary-highlight);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.floating-icon svg { color: var(--color-primary); }
+.floating-text { display: flex; flex-direction: column; }
+.floating-label { font-size: var(--text-xs); color: var(--color-text-muted); }
+.floating-value { font-family: var(--font-display); font-size: var(--text-base); font-weight: 600; color: var(--color-text); }
+
+/* ── WHO AM I SECTION ── */
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: var(--space-16);
+  align-items: start;
+}
+.section-label {
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-primary);
+  margin-bottom: var(--space-4);
+}
+.section-title {
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: var(--color-text);
+  margin-bottom: var(--space-6);
+}
+.section-title .accent { color: var(--color-primary); }
+.body-text {
+  font-size: var(--text-base);
+  color: var(--color-text-muted);
+  line-height: 1.75;
+  margin-bottom: var(--space-5);
+  max-width: 65ch;
+}
+.credentials-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin-top: var(--space-6);
+}
+.credential-item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+}
+.credential-icon {
+  width: 36px; height: 36px;
+  border-radius: var(--radius-md);
+  background: var(--color-primary-highlight);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  color: var(--color-primary);
+}
+.credential-title { font-size: var(--text-sm); font-weight: 600; color: var(--color-text); }
+.credential-sub { font-size: var(--text-xs); color: var(--color-text-muted); margin-top: 2px; }
+
+/* About right side — story cards */
+.story-stack { display: flex; flex-direction: column; gap: var(--space-4); }
+.story-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-6);
+}
+.story-card-num {
+  font-family: var(--font-display);
+  font-size: var(--text-3xl);
+  font-weight: 700;
+  color: color-mix(in srgb, var(--color-primary) 15%, transparent);
+  line-height: 1;
+  margin-bottom: var(--space-2);
+}
+.story-card-title { font-size: var(--text-base); font-weight: 600; color: var(--color-text); margin-bottom: var(--space-2); }
+.story-card-text { font-size: var(--text-sm); color: var(--color-text-muted); line-height: 1.65; }
+
+/* ── FOR WHOM ── */
+.for-whom-section { background: var(--color-surface); }
+.fears-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(280px, 100%), 1fr));
+  gap: var(--space-4);
+  margin-top: var(--space-10);
+}
+.fear-card {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-6);
+  position: relative;
+  overflow: hidden;
+}
+.fear-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--color-primary);
+  opacity: 0;
+  transition: opacity var(--transition-interactive);
+}
+.fear-card:hover::before { opacity: 1; }
+.fear-emoji { font-size: 2rem; margin-bottom: var(--space-3); }
+.fear-problem { font-size: var(--text-sm); color: var(--color-text-muted); margin-bottom: var(--space-3); line-height: 1.6; }
+.fear-solution { font-size: var(--text-sm); font-weight: 600; color: var(--color-primary); }
+
+/* ── PROGRAM SECTION ── */
+.program-header { text-align: center; max-width: 60ch; margin-inline: auto; margin-bottom: var(--space-12); }
+.week-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: var(--space-2); margin-top: var(--space-10); }
+.day-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4) var(--space-3);
+  text-align: center;
+  transition: background var(--transition-interactive), transform var(--transition-interactive);
+}
+.day-card:hover { background: var(--color-surface-offset); transform: translateY(-2px); }
+.day-card.active {
+  background: var(--color-primary-highlight);
+  border-color: color-mix(in srgb, var(--color-primary) 30%, transparent);
+}
+.day-label { font-size: var(--text-xs); color: var(--color-text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: var(--space-2); }
+.day-type { font-size: var(--text-xs); font-weight: 600; color: var(--color-text); line-height: 1.4; }
+.day-card.active .day-type { color: var(--color-primary); }
+.day-icon { font-size: 1.25rem; margin-bottom: var(--space-2); }
+
+.principles-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-6);
+  margin-top: var(--space-10);
+}
+.principle-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-8);
+}
+.principle-number {
+  font-family: var(--font-display);
+  font-size: var(--text-3xl);
+  font-weight: 700;
+  color: var(--color-primary);
+  line-height: 1;
+  margin-bottom: var(--space-4);
+}
+.principle-title { font-size: var(--text-base); font-weight: 700; color: var(--color-text); margin-bottom: var(--space-3); }
+.principle-text { font-size: var(--text-sm); color: var(--color-text-muted); line-height: 1.7; }
+
+/* ── MUSCLE MEMORY ── */
+.muscle-memory-section {
+  background: var(--color-primary);
+  color: var(--color-text-inverse);
+  padding-block: clamp(var(--space-12), 8vw, var(--space-20));
+}
+.mm-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-12);
+  align-items: center;
+}
+.mm-title {
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  margin-bottom: var(--space-6);
+  color: var(--color-text-inverse);
+}
+.mm-text { font-size: var(--text-base); opacity: 0.8; line-height: 1.7; margin-bottom: var(--space-5); }
+.mm-stats { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4); }
+.mm-stat {
+  background: color-mix(in srgb, var(--color-text-inverse) 12%, transparent);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+}
+.mm-stat-num { font-family: var(--font-display); font-size: var(--text-2xl); font-weight: 700; color: var(--color-text-inverse); line-height: 1; }
+.mm-stat-label { font-size: var(--text-xs); opacity: 0.7; margin-top: var(--space-1); }
+
+/* ── NUTRITION ── */
+.nutrition-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-8);
+  margin-top: var(--space-10);
+}
+.calc-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-8);
+}
+.calc-title { font-size: var(--text-base); font-weight: 700; color: var(--color-text); margin-bottom: var(--space-6); }
+.calc-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-3) 0;
+  border-bottom: 1px solid var(--color-divider);
+  font-size: var(--text-sm);
+}
+.calc-row:last-child { border-bottom: none; }
+.calc-goal { color: var(--color-text-muted); }
+.calc-value { font-weight: 600; color: var(--color-text); }
+.calc-row.highlight .calc-value { color: var(--color-primary); }
+.calc-row.highlight .calc-goal { color: var(--color-text); font-weight: 600; }
+
+.rules-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-8);
+}
+.rule-item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-3) 0;
+  border-bottom: 1px solid var(--color-divider);
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
+.rule-item:last-child { border-bottom: none; }
+.rule-check { color: var(--color-primary); flex-shrink: 0; margin-top: 2px; }
+
+/* ── CTA SECTION ── */
+.cta-section {
+  text-align: center;
+  padding-block: clamp(var(--space-16), 10vw, var(--space-24));
+}
+.cta-glow {
+  position: relative;
+  display: inline-block;
+}
+.cta-glow::before {
+  content: '';
+  position: absolute;
+  inset: -40px;
+  background: radial-gradient(ellipse, color-mix(in srgb, var(--color-primary) 15%, transparent), transparent 70%);
+  pointer-events: none;
+}
+.cta-title {
+  font-family: var(--font-display);
+  font-size: var(--text-3xl);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: var(--color-text);
+  margin-bottom: var(--space-4);
+}
+.cta-title .accent { color: var(--color-primary); }
+.cta-sub {
+  font-size: var(--text-lg);
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-10);
+  max-width: 50ch;
+  margin-inline: auto;
+}
+.dm-box {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-4) var(--space-6);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-full);
+  font-size: var(--text-base);
+  margin-bottom: var(--space-8);
+}
+.dm-keyword {
+  font-family: var(--font-display);
+  font-weight: 700;
+  color: var(--color-primary);
+  font-size: var(--text-xl);
+  letter-spacing: -0.02em;
+}
+.dm-separator { color: var(--color-text-faint); }
+.btn-primary-lg {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-5) var(--space-12);
+  background: var(--color-primary);
+  color: var(--color-text-inverse);
+  border-radius: var(--radius-full);
+  font-size: var(--text-lg);
+  font-weight: 700;
+  text-decoration: none;
+  transition: background var(--transition-interactive), transform var(--transition-interactive), box-shadow var(--transition-interactive);
+}
+.btn-primary-lg:hover {
+  background: var(--color-primary-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px color-mix(in srgb, var(--color-primary) 30%, transparent);
+}
+.cta-note { font-size: var(--text-xs); color: var(--color-text-faint); margin-top: var(--space-5); }
+
+/* ── FOOTER ── */
+footer {
+  border-top: 1px solid var(--color-divider);
+  padding-block: var(--space-8);
+}
+.footer-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}
+.footer-copy { font-size: var(--text-xs); color: var(--color-text-faint); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  .hero-grid { grid-template-columns: 1fr; }
+  .hero-image-side { order: -1; }
+  .hero-photo-frame, .hero-photo-placeholder { max-width: 280px; aspect-ratio: 1/1; margin-inline: auto; }
+  .hero-floating-card { left: 0; bottom: calc(-1 * var(--space-6)); }
+  .about-grid { grid-template-columns: 1fr; }
+  .mm-inner { grid-template-columns: 1fr; }
+  .nutrition-grid { grid-template-columns: 1fr; }
+  .week-grid { grid-template-columns: repeat(4, 1fr); }
+  .principles-grid { grid-template-columns: 1fr; }
+  .hero-stats { gap: var(--space-6); }
+}
+@media (max-width: 480px) {
+  .week-grid { grid-template-columns: repeat(2, 1fr); }
+  .mm-stats { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- SKIP LINK -->
+<a href="#main" style="position:absolute;top:-40px;left:0;background:var(--color-primary);color:var(--color-text-inverse);padding:8px;border-radius:0 0 4px 0;text-decoration:none;font-size:var(--text-sm);" onfocus="this.style.top='0'">Ugrás a tartalomhoz</a>
+
+<!-- NAV -->
+<nav aria-label="Fő navigáció">
+  <div class="container--wide">
+    <div class="nav-inner">
+      <a href="#" class="nav-logo" aria-label="Be Bretter főoldal">
+        <!-- Logo SVG -->
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+          <rect width="32" height="32" rx="8" fill="var(--color-primary)"/>
+          <path d="M8 8h6c3.3 0 5 1.4 5 3.8 0 1.5-.8 2.7-2 3.2 1.6.5 2.6 1.8 2.6 3.5C19.6 21.5 17.5 23 14 23H8V8zm3 5.8h2.6c1.3 0 2-.6 2-1.7S14.9 10 13.6 10H11v3.8zm0 6.8h3c1.4 0 2.1-.7 2.1-1.9s-.7-1.9-2.1-1.9H11v3.8z" fill="var(--color-text-inverse)"/>
+        </svg>
+        <span class="nav-logo-text">Be <span>Bretter</span></span>
+      </a>
+      <div class="nav-actions">
+        <button class="btn-theme" data-theme-toggle aria-label="Téma váltása">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+        </button>
+        <a href="#cta" class="btn-cta-nav">
+          Kezdjük el →
+        </a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- MAIN -->
+<main id="main">
+
+  <!-- HERO -->
+  <section class="hero" aria-labelledby="hero-heading">
+    <div class="hero-bg" aria-hidden="true"></div>
+    <div class="container--wide">
+      <div class="hero-grid">
+
+        <!-- Left: Text -->
+        <div>
+          <div class="hero-badge">
+            <span class="hero-badge-dot" aria-hidden="true"></span>
+            AFAA-minősített Online Coach
+          </div>
+          <h1 class="hero-title" id="hero-heading">
+            Épüljön<br>az <span class="accent">izmaid.</span><br>Nem a félelmeid.
+          </h1>
+          <p class="hero-desc">
+            Napi 1 óra. Heti 4 nap. Valódi progresszió. Ha kezdő vagy és nem tudod hol állj neki — pontosan neked csináltam ezt a programot.
+          </p>
+          <div class="hero-stats" aria-label="Program adatok">
+            <div class="stat-item">
+              <div class="stat-number">6</div>
+              <div class="stat-label">Hetes program</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-number">4</div>
+              <div class="stat-label">Nap / hét</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-number">1h</div>
+              <div class="stat-label">Napi edzés</div>
+            </div>
+          </div>
+          <div class="hero-cta-group">
+            <a href="#cta" class="btn-primary">
+              Ingyenes programot kérek
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+            <a href="#program" class="btn-ghost">A program →</a>
+          </div>
+        </div>
+
+        <!-- Right: Photo -->
+        <div class="hero-image-side">
+          <div class="hero-photo-frame">
+            <img
+  src="edzopk.PNG"
+  alt="Bretter Erik AFAA-minősített online fitness coach"
+  width="420"
+  height="560"
+  loading="eager"
+  style="width:100%; aspect-ratio:3/4; object-fit:cover; border-radius:var(--radius-2xl); box-shadow:var(--shadow-lg);"
+>
+            <div class="hero-floating-card" aria-label="Certified Personal Trainer">
+              <div class="floating-icon" aria-hidden="true">
+  <img src="QRCERT.PNG" alt="AFAA CPT tanúsítvány" width="36" height="36" loading="lazy" style="width:36px; height:36px; object-fit:cover; border-radius:var(--radius-sm);">
+</div>
+              <div class="floating-text">
+                <div class="floating-label">Minősítés</div>
+                <div class="floating-value">AFAA Certified PT</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- WHO AM I -->
+  <section class="section" id="about" aria-labelledby="about-heading">
+    <div class="container--wide">
+      <div class="about-grid">
+
+        <!-- Left: Credentials -->
+        <div class="fade-in">
+          <p class="section-label">Az edződ</p>
+          <h2 class="section-title" id="about-heading">Én is ugyanott<br>voltam ahol <span class="accent">te.</span></h2>
+          <p class="body-text">
+            Sportmenedzsmentet tanulok az ELTE-n, és AFAA-minősített személyi edző vagyok. De ami fontosabb: én is kezdőként álltam egyszer az edzőterem közepén, fogalmam sem volt mit csinálok, és 10 különböző YouTube-videó 10 különböző módszert ajánlott.
+          </p>
+          <p class="body-text">
+            A fordulat az volt, amikor abbahagytam a tartalomfogyasztást, és elkezdtem egyetlen rendszert követni — következetesen. A Be Bretter program azt a rendszert adja, amit én szerettem volna megkapni az elején.
+          </p>
+
+          <div class="credentials-list" role="list">
+            <div class="credential-item" role="listitem">
+              <div class="credential-icon" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 15l-2-5L8 9l4-6 4 6-2 1-2 5z"/><path d="M20 15c-1 2-4 5-8 5s-7-3-8-5"/></svg>
+              </div>
+              <div>
+                <div class="credential-title">AFAA Certified Personal Trainer</div>
+                <div class="credential-sub">Akkreditált személyi edző képzés</div>
+              </div>
+            </div>
+            <div class="credential-item" role="listitem">
+              <div class="credential-icon" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+              </div>
+              <div>
+                <div class="credential-title">ELTE — Sport Management BSc</div>
+                <div class="credential-sub">Sporttudományos és üzleti alap</div>
+              </div>
+            </div>
+            <div class="credential-item" role="listitem">
+              <div class="credential-icon" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+              </div>
+              <div>
+                <div class="credential-title">Evidencia-alapú megközelítés</div>
+                <div class="credential-sub">Sporttudomány + valódi eredmények</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Story cards -->
+        <div class="story-stack fade-in">
+          <div class="story-card">
+            <div class="story-card-num" aria-hidden="true">01</div>
+            <div class="story-card-title">Miért pont te?</div>
+            <p class="story-card-text">Mert nem 10 éves profi versenyző tapasztalatomat hozom — hanem azt, amit a kezdők valójában kérdeznek. A struktúrát, a logikát, a "de miért?" kérdések megválaszolását.</p>
+          </div>
+          <div class="story-card">
+            <div class="story-card-num" aria-hidden="true">02</div>
+            <div class="story-card-title">Mi a különbség?</div>
+            <p class="story-card-text">Az interneten 90% fogyással foglalkozik. Ha izmot akarsz építeni diákként, napi 1 órával — pontosan ezért nincs sok tartalom neked. Én ezt az ürességet töltöm be.</p>
+          </div>
+          <div class="story-card">
+            <div class="story-card-num" aria-hidden="true">03</div>
+            <div class="story-card-title">Mi a célja ennek az oldalnak?</div>
+            <p class="story-card-text">Egy ingyenes 6 hetes edzésprogramot adsz magadnak. Ha tetszik a rendszer és többet akarsz, van lehetőség személyre szabott 1:1 coachingra is.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FOR WHOM -->
+  <section class="section for-whom-section" id="neked" aria-labelledby="forwho-heading">
+    <div class="container--wide">
+      <div style="text-align:center; max-width:55ch; margin-inline:auto;" class="fade-in">
+        <p class="section-label">Neked szól?</p>
+        <h2 class="section-title" id="forwho-heading">Ha ezeket gondolod,<br>ez a program <span class="accent">neked</span> van.</h2>
+      </div>
+      <div class="fears-grid" role="list">
+        <div class="fear-card fade-in" role="listitem">
+          <div class="fear-emoji" aria-hidden="true">⏱️</div>
+          <p class="fear-problem">"Napi 1 óránál több nincs meg edzésre — ez biztosan kevés."</p>
+          <p class="fear-solution">→ Nem. Heti 3×45–60 perc ugyanolyan eredményt ad, ha van progresszió.</p>
+        </div>
+        <div class="fear-card fade-in" role="listitem">
+          <div class="fear-emoji" aria-hidden="true">😰</div>
+          <p class="fear-problem">"Mi van ha megint abbahagyom és elveszítem az összes eredményt?"</p>
+          <p class="fear-solution">→ Muscle memory. 1-2 hét kihagyás után 80%-a visszajön 2 héten belül.</p>
+        </div>
+        <div class="fear-card fade-in" role="listitem">
+          <div class="fear-emoji" aria-hidden="true">🧭</div>
+          <p class="fear-problem">"Nem tudom hol kezdjem. 10 videó, 10 módszer — mindegyik mást mond."</p>
+          <p class="fear-solution">→ Egy rendszer, 6 hétre előre megírva. Nincs több döntési paralízis.</p>
+        </div>
+        <div class="fear-card fade-in" role="listitem">
+          <div class="fear-emoji" aria-hidden="true">💪</div>
+          <p class="fear-problem">"Izmot akarok építeni, de csak fogyásos tartalmat látok mindenhol."</p>
+          <p class="fear-solution">→ A Be Bretter program tömegelésre van kalibrálva. Kalória többlet, nem deficit.</p>
+        </div>
+        <div class="fear-card fade-in" role="listitem">
+          <div class="fear-emoji" aria-hidden="true">📊</div>
+          <p class="fear-problem">"Edzelek, de nem látom, hogy fejlődök. Talán nekem nem megy."</p>
+          <p class="fear-solution">→ Progressive overload nélkül az izom megáll. Megmutatom, mikor és mennyit emelj.</p>
+        </div>
+        <div class="fear-card fade-in" role="listitem">
+          <div class="fear-emoji" aria-hidden="true">🎓</div>
+          <p class="fear-problem">"Diák vagyok, kevés a pénzem — nem engedhetem meg magamnak."</p>
+          <p class="fear-solution">→ Az alapprogramot ingyen adod magadnak. DM elég, semmi más nem kell.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROGRAM -->
+  <section class="section" id="program" aria-labelledby="program-heading">
+    <div class="container--wide">
+      <div class="program-header fade-in">
+        <p class="section-label">A program</p>
+        <h2 class="section-title" id="program-heading">6 hét. Pontosan <span class="accent">tudod</span><br>mit csinálsz napról napra.</h2>
+      </div>
+
+      <!-- Week schedule -->
+      <div class="week-grid fade-in" role="list" aria-label="Heti edzésbeosztás">
+        <div class="day-card" role="listitem">
+          <div class="day-label">H</div>
+          <div class="day-icon" aria-hidden="true">🏃</div>
+          <div class="day-type">Kardió + Nyújtás</div>
+        </div>
+        <div class="day-card active" role="listitem">
+          <div class="day-label">K</div>
+          <div class="day-icon" aria-hidden="true">💪</div>
+          <div class="day-type">PUSH<br><span style="font-size:0.8em;opacity:0.7">Mell · Váll · Tri</span></div>
+        </div>
+        <div class="day-card active" role="listitem">
+          <div class="day-label">Sze</div>
+          <div class="day-icon" aria-hidden="true">🏋️</div>
+          <div class="day-type">PULL<br><span style="font-size:0.8em;opacity:0.7">Hát · Bicepsz</span></div>
+        </div>
+        <div class="day-card" role="listitem">
+          <div class="day-label">Cs</div>
+          <div class="day-icon" aria-hidden="true">🔥</div>
+          <div class="day-type">Kardió + Has</div>
+        </div>
+        <div class="day-card active" role="listitem">
+          <div class="day-label">P</div>
+          <div class="day-icon" aria-hidden="true">💪</div>
+          <div class="day-type">FELSŐTEST<br><span style="font-size:0.8em;opacity:0.7">Teljes</span></div>
+        </div>
+        <div class="day-card active" role="listitem">
+          <div class="day-label">Szo</div>
+          <div class="day-icon" aria-hidden="true">🦵</div>
+          <div class="day-type">ALSÓTEST<br><span style="font-size:0.8em;opacity:0.7">Teljes</span></div>
+        </div>
+        <div class="day-card" role="listitem">
+          <div class="day-label">V</div>
+          <div class="day-icon" aria-hidden="true">😴</div>
+          <div class="day-type">Pihenő<br><span style="font-size:0.8em;opacity:0.7">Kötelező</span></div>
+        </div>
+      </div>
+
+      <div class="principles-grid fade-in" style="margin-top: var(--space-12);">
+        <div class="principle-card">
+          <div class="principle-number">01</div>
+          <div class="principle-title">Progresszív terhelés</div>
+          <p class="principle-text">Minden héten +1 ismétlés, +2,5 kg, vagy jobb technika. Ha ez megvan, az izmod növekedni fog — ez az egyetlen szabály, ami számít.</p>
+        </div>
+        <div class="principle-card">
+          <div class="principle-number">02</div>
+          <div class="principle-title">3 szettes struktúra</div>
+          <p class="principle-text">1. szett: rávezetés és technika. 2–3. szett: valódi munkavégzés. Nem véletlenszerű ismétlések — hanem célzott terhelés, amely eredményt hoz.</p>
+        </div>
+        <div class="principle-card">
+          <div class="principle-number">03</div>
+          <div class="principle-title">Tömegelő táplálkozás</div>
+          <p class="principle-text">Kalória többlet, nem deficit. Testsúly × 35 = napi kalóriabevitel. 1,6–2,2 g fehérje kilogrammonként. Egyszerű, mérhető, működő.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MUSCLE MEMORY HIGHLIGHT -->
+  <section class="muscle-memory-section" aria-labelledby="mm-heading">
+    <div class="container--wide">
+      <div class="mm-inner">
+        <div class="fade-in">
+          <h2 class="mm-title" id="mm-heading">Ha kimaradsz pár napot, nem veszíted el az izmaidat.</h2>
+          <p class="mm-text">
+            Az izmaidban lévő sejtmagok megmaradnak akkor is, ha egy ideig nem edzel. Ezt hívják muscle memory-nek. Az egyetlen dolog, ami csökken az első 2 hétben: a glikogén raktár és a víztartalom — nem az izom.
+          </p>
+          <p class="mm-text" style="margin-bottom:0">
+            Vizsgaidőszak, nyár, betegség — semmi baj. Mentsd el ezt a gondolatot: nem az abbahagyástól kell félni, hanem az el nem kezdéstől.
+          </p>
+        </div>
+        <div class="mm-stats fade-in" aria-label="Muscle memory tények">
+          <div class="mm-stat">
+            <div class="mm-stat-num">2 hét</div>
+            <div class="mm-stat-label">kihagyás = minimális izomveszteség</div>
+          </div>
+          <div class="mm-stat">
+            <div class="mm-stat-num">~80%</div>
+            <div class="mm-stat-label">visszaépül 2 héten belül 1 hónap kihagyás után</div>
+          </div>
+          <div class="mm-stat">
+            <div class="mm-stat-num">2-3×</div>
+            <div class="mm-stat-label">gyorsabb visszaépülés a muscle memory miatt</div>
+          </div>
+          <div class="mm-stat">
+            <div class="mm-stat-num">1 nap</div>
+            <div class="mm-stat-label">elég elkezdeni — ma, nem hétfőn</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NUTRITION -->
+  <section class="section" id="taplalkozas" aria-labelledby="nutrition-heading">
+    <div class="container--wide">
+      <div class="fade-in" style="text-align:center; max-width:55ch; margin-inline:auto; margin-bottom:var(--space-4)">
+        <p class="section-label">Táplálkozás</p>
+        <h2 class="section-title" id="nutrition-heading">Izmot enni is kell<br>nem csak <span class="accent">edzeni.</span></h2>
+      </div>
+      <div class="nutrition-grid fade-in">
+        <div class="calc-card">
+          <div class="calc-title">Kalória kalkulátor tömegeléshez</div>
+          <div class="calc-row"><span class="calc-goal">Fogyás</span><span class="calc-value">Testsúly × 25 kcal</span></div>
+          <div class="calc-row"><span class="calc-goal">Karbantartás</span><span class="calc-value">Testsúly × 29 kcal</span></div>
+          <div class="calc-row highlight"><span class="calc-goal">✦ Tömegelés (a te célod)</span><span class="calc-value">Testsúly × 35 kcal</span></div>
+          <div style="margin-top:var(--space-5); padding:var(--space-4); background:var(--color-primary-highlight); border-radius:var(--radius-md);">
+            <div style="font-size:var(--text-xs); color:var(--color-text-muted); margin-bottom:var(--space-1)">Fehérje cél</div>
+            <div style="font-size:var(--text-base); font-weight:600; color:var(--color-primary)">1,6–2,2 g × testsúly (kg) / nap</div>
+            <div style="font-size:var(--text-xs); color:var(--color-text-muted); margin-top:var(--space-1)">70 kg → 112–154 g fehérje naponta</div>
+          </div>
+        </div>
+        <div class="rules-card">
+          <div class="calc-title">Napi táplálkozási szabályok</div>
+          <div role="list">
+            <div class="rule-item" role="listitem">
+              <span class="rule-check" aria-hidden="true">✓</span>
+              <span>Minden étkezés tartalmazzon fehérjeforrást: hús, hal, tojás, görög joghurt, fehérjepor</span>
+            </div>
+            <div class="rule-item" role="listitem">
+              <span class="rule-check" aria-hidden="true">✓</span>
+              <span>Fél tányérnyi zöldség minden étkezéshez — kalória nélküli teltségérzet</span>
+            </div>
+            <div class="rule-item" role="listitem">
+              <span class="rule-check" aria-hidden="true">✓</span>
+              <span>Napi 2–3 liter víz — az izomteljesítmény és -regeneráció alapja</span>
+            </div>
+            <div class="rule-item" role="listitem">
+              <span class="rule-check" aria-hidden="true">✓</span>
+              <span>7–9 óra alvás — az izom pihenés közben épül, nem edzés közben</span>
+            </div>
+            <div class="rule-item" role="listitem">
+              <span class="rule-check" aria-hidden="true">✓</span>
+              <span>Cukor bevitel minimalizálása — nem tiltott, de ne a kalóriatöbblet ebből jöjjön</span>
+            </div>
+            <div class="rule-item" role="listitem">
+              <span class="rule-check" aria-hidden="true">✓</span>
+              <span>Kreatin: biztonságos, olcsó, bizonyítottan működik — 3-5g/nap</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section" id="cta" aria-labelledby="cta-heading">
+    <div class="container">
+      <div class="cta-glow fade-in">
+        <p class="section-label" style="margin-bottom:var(--space-4)">Ingyenes program</p>
+        <h2 class="cta-title" id="cta-heading">Írd be a DM-be:<br><span class="accent">PROGRAM</span></h2>
+        <p class="cta-sub">Elküldöm a teljes 6 hetes Be Bretter edzéstervet. Ingyen. Azonnal. Innen tudod elkezdeni.</p>
+
+        <div class="dm-box" aria-label="Instagram DM kulcsszó">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          <span style="color:var(--color-text-muted); font-size:var(--text-sm)">Instagram DM →</span>
+          <span class="dm-separator" aria-hidden="true">|</span>
+          <span class="dm-keyword">PROGRAM</span>
+        </div>
+        <br>
+        <a href="https://instagram.com/bretter.coaching/" target="_blank" rel="noopener noreferrer" class="btn-primary-lg">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          Küld el a DM-et →
+        </a>
+        <p class="cta-note">Nincs regisztráció. Nincs fizetés. Csak a program — és az eredmények.</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container--wide">
+    <div class="footer-inner">
+      <a href="#" class="nav-logo" style="text-decoration:none;" aria-label="Be Bretter főoldal">
+        <svg width="24" height="24" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+          <rect width="32" height="32" rx="8" fill="var(--color-primary)"/>
+          <path d="M8 8h6c3.3 0 5 1.4 5 3.8 0 1.5-.8 2.7-2 3.2 1.6.5 2.6 1.8 2.6 3.5C19.6 21.5 17.5 23 14 23H8V8zm3 5.8h2.6c1.3 0 2-.6 2-1.7S14.9 10 13.6 10H11v3.8zm0 6.8h3c1.4 0 2.1-.7 2.1-1.9s-.7-1.9-2.1-1.9H11v3.8z" fill="var(--color-text-inverse)"/>
+        </svg>
+        <span style="font-family:var(--font-display); font-size:var(--text-base); font-weight:600; letter-spacing:-0.02em; color:var(--color-text);">Be Bretter</span>
+      </a>
+      <p class="footer-copy">© 2026 Be Bretter · AFAA Certified Personal Trainer · Online Coaching</p>
+      <div style="font-size:var(--text-xs); color:var(--color-text-faint)">Tököl, Magyarország</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Theme toggle
+(function(){
+  const t = document.querySelector('[data-theme-toggle]');
+  const r = document.documentElement;
+  let d = r.getAttribute('data-theme') || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  r.setAttribute('data-theme', d);
+  function updateIcon() {
+    if (!t) return;
+    t.innerHTML = d === 'dark'
+      ? '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>'
+      : '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
+    t.setAttribute('aria-label', 'Váltás ' + (d === 'dark' ? 'világos' : 'sötét') + ' módra');
+  }
+  updateIcon();
+  if (t) {
+    t.addEventListener('click', () => {
+      d = d === 'dark' ? 'light' : 'dark';
+      r.setAttribute('data-theme', d);
+      updateIcon();
+    });
+  }
+})();
+</script>
+
+</body>
+</html>
