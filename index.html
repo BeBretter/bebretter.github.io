@@ -242,11 +242,15 @@ nav {
   width: 6px; height: 6px;
   border-radius: var(--radius-full);
   background: var(--color-primary);
+  animation: pulse-dot 2s infinite;
 }
 @keyframes pulse-dot {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.5; transform: scale(0.7); }
-}
+  0% {
+    box-shadow: 0 0 0 0px rgba(0, 0, 0, 0.2);
+  }
+  100% {
+    box-shadow: 0 0 0 20px rgba(0, 0, 0, 0);
+  }
 .hero-title {
   font-family: var(--font-display);
   font-size: var(--text-hero);
