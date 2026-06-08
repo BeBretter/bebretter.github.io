@@ -73,7 +73,7 @@
   --color-text-muted:       #6a6864;
   --color-text-faint:       #b0aea8;
   --color-text-inverse:     #f9f8f5;
-  --color-primary:          #3d6e00;
+  --color-primary:          #f97316
   --color-primary-hover:    #2d5200;
   --color-primary-active:   #1e3800;
   --color-primary-highlight: #e0f0c0;
@@ -691,16 +691,35 @@ footer {
   .hero-image-side { order: -1; }
   .hero-photo-frame, .hero-photo-placeholder { max-width: 280px; aspect-ratio: 1/1; margin-inline: auto; }
   .hero-floating-card { left: 0; bottom: calc(-1 * var(--space-6)); }
-  .about-grid { grid-template-columns: 1fr; }
+  .about-grid { grid-template-columns: 1fr; gap: var(--space-8); }
   .mm-inner { grid-template-columns: 1fr; }
   .nutrition-grid { grid-template-columns: 1fr; }
   .week-grid { grid-template-columns: repeat(4, 1fr); }
   .principles-grid { grid-template-columns: 1fr; }
   .hero-stats { gap: var(--space-6); }
+  .fears-grid { grid-template-columns: 1fr; }
+  .btn-cta-nav { display: none; }
+  .hero { padding-block: var(--space-12); min-height: auto; }
+  .hero-title { font-size: clamp(2.2rem, 10vw, 4rem); }
+  .hero-cta-group { flex-direction: column; align-items: stretch; }
+  .hero-cta-group a { text-align: center; justify-content: center; }
+  .section-title { font-size: clamp(1.6rem, 7vw, 3rem); }
+  .cta-title { font-size: clamp(1.8rem, 8vw, 3.5rem); }
+  .dm-box { flex-direction: column; gap: var(--space-2); border-radius: var(--radius-xl); }
+  .btn-primary-lg { padding: var(--space-4) var(--space-8); font-size: var(--text-base); }
+  .footer-inner { flex-direction: column; text-align: center; }
 }
 @media (max-width: 480px) {
   .week-grid { grid-template-columns: repeat(2, 1fr); }
   .mm-stats { grid-template-columns: 1fr; }
+  .hero-stats { flex-direction: row; justify-content: space-between; gap: var(--space-4); }
+  .stat-number { font-size: var(--text-xl); }
+  .hero-floating-card { display: none; }
+  .principles-grid { gap: var(--space-4); }
+  .principle-card { padding: var(--space-5); }
+  .fear-card { padding: var(--space-4); }
+  .container, .container--wide { padding-inline: var(--space-4); }
+  .calc-card, .rules-card { padding: var(--space-5); }
 }
 </style>
 </head>
